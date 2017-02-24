@@ -1,8 +1,6 @@
 # node-auth
-
 This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 4.1.3.
-
-## Getting Started
+Split and keep server side node architecture style.
 
 ### Prerequisites
 
@@ -10,18 +8,17 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
 - [Node.js and npm](nodejs.org) Node >= 4.x.x, npm >= 2.x.x
 - [MongoDB](https://www.mongodb.org/) - Keep a running daemon with `mongod`
 
-### Developing
+## Getting Started
 
 1. Run `npm install` to install server dependencies.
 
 2. Run `mongod` in a separate shell to keep an instance of the MongoDB Daemon running
 
-3. Run `gulp serve` to start the development server. It should automatically open the client in your browser when ready.
+### Developing
 
-## Build & development
+3. Run `npm run start:dev` to run api in development mode
 
-Run `gulp build` for building and `gulp serve` for preview.
 
-## Testing
+### Production
 
-Running `npm test` will run the unit tests with karma.
+3. Run `npm run start` to run api in production mode
