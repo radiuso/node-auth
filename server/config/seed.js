@@ -10,9 +10,10 @@ import config from './environment/';
 
 export default function seedDatabaseIfNeeded() {
   if(config.seedDB) {
+    console.log("Seeding...")
     Thing.find({}).remove()
       .then(() => {
-        Thing.create({
+        return Thing.create({
           name: 'Development Tools',
           info: 'Integration with popular tools such as Webpack, Gulp, Babel, TypeScript, Karma, '
                 + 'Mocha, ESLint, Node Inspector, Livereload, Protractor, Pug, '
@@ -46,7 +47,7 @@ export default function seedDatabaseIfNeeded() {
 
     User.find({}).remove()
       .then(() => {
-        User.create({
+        return User.create({
           provider: 'local',
           name: 'Test User',
           email: 'test@example.com',
