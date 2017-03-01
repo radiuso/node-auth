@@ -10,7 +10,7 @@ import config from './environment/';
 
 export default function seedDatabaseIfNeeded() {
   if(config.seedDB) {
-    console.log("Seeding...")
+    console.log('Seeding...');
     Thing.find({}).remove()
       .then(() => {
         return Thing.create({
