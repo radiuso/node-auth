@@ -2,6 +2,21 @@
   "name": "node-auth",
   "version": "0.0.0",
   "main": "server/index.js",
+  "engines": {
+    "node": "^6.2.2",
+    "npm": "^3.9.5"
+  },
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node server",
+    "start:dev": "cross-env NODE_ENV=development nodemon --watch server server",
+    "test": "gulp test"
+  },
+  "private": true,
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
   "dependencies": {
     "babel-polyfill": "^6.7.2",
     "babel-runtime": "^6.6.1",
@@ -66,15 +81,5 @@
     "sinon-chai": "^2.8.0",
     "supertest": "^3.0.0",
     "through2": "^2.0.3"
-  },
-  "engines": {
-    "node": "^6.2.2",
-    "npm": "^3.9.5"
-  },
-  "scripts": {
-    "start": "cross-env NODE_ENV=production node server",
-    "start:dev": "cross-env NODE_ENV=development nodemon --watch server server",
-    "test": "gulp test"
-  },
-  "private": true
+  }
 }
