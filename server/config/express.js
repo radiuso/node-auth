@@ -36,7 +36,6 @@ export default function(app) {
   app.use(express.static(app.get('appPath')));
   app.use(morgan('dev'));
 
-  app.set('views', `${config.root}/server/views`);
   app.engine('html', require('ejs').renderFile);
   app.set('view engine', 'html');
   app.use(shrinkRay());
