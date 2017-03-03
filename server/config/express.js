@@ -21,11 +21,34 @@ import connectMongo from 'connect-mongo';
 import mongoose from 'mongoose';
 var MongoStore = connectMongo(session);
 
+function logErrors(err, req, res, next) {
+  console.error(err.stack);
+  next(err);
+}
+
+function clientErrorHandler(err, req, res, next) {
+  res.status(500).send({ 
+    error: {
+      name: err.name,
+      message: err.message,
+      code: err.code
+    }
+  });
+}
+
 export default function(app) {
   var env = app.get('env');
 
   if(env === 'development' || env === 'test') {
     app.use(express.static(path.join(config.root, '.tmp')));
+    app.use(function(req, res, next) { 
+      res.setHeader('Access-Control-Allow-Origin', '*'); 
+      res.setHeader('Access-Control-Allow-Headers', 'Origin, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, X-Response-Time, X-PINGOTHER, X-CSRF-Token,Authorization'); 
+      res.setHeader('Access-Control-Allow-Methods', '*'); 
+      res.setHeader('Access-Control-Expose-Headers', 'X-Api-Version, X-Request-Id, X-Response-Time'); 
+      res.setHeader('Access-Control-Max-Age', '1000'); 
+      return next(); 
+    });
   }
 
   if(env === 'production') {
@@ -45,7 +68,6 @@ export default function(app) {
   app.use(cookieParser());
   app.use(passport.initialize());
 
-
   // Persist sessions with MongoStore / sequelizeStore
   // We need to enable sessions for passport-twitter because it's an
   // oauth 1.0 strategy, and Lusca depends on sessions
@@ -59,26 +81,10 @@ export default function(app) {
     })
   }));
 
-  /**
-   * Lusca - express server security
-   * https://github.com/krakenjs/lusca
-   */
-  if(env !== 'test' && !process.env.SAUCE_USERNAME) {
-    app.use(lusca({
-      csrf: {
-        angular: false
-      },
-      xframe: 'SAMEORIGIN',
-      hsts: {
-        maxAge: 31536000, //1 year, in seconds
-        includeSubDomains: true,
-        preload: true
-      },
-      xssProtection: true
-    }));
-  }
-
   if(env === 'development' || env === 'test') {
+    // handle errors
+    app.use(logErrors);
     app.use(errorHandler()); // Error handler - has to be last
   }
+  app.use(clientErrorHandler);
 }
