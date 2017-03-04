@@ -1,0 +1,8 @@
+.persistent-message {
+    padding: 1em;
+
+    &.persistent-message--error {
+        background-color: #ffcdd2;
+        color:rgb(244, 67, 54);
+    }
+}

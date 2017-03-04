@@ -1,18 +1,34 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Formsy from 'formsy-react';
+import { FormsyText } from 'formsy-material-ui/lib';
+import RaisedButton from 'material-ui/RaisedButton';
+import { isEmpty } from 'lodash';
+
+import PersistentMessage from '../../../components/PersistentMessage';
 import { login, logout } from '../../../actions/authActions';
 
 class LoginComponent extends Component {
-  handleLogin(e) {
-    e.preventDefault();
-    let email = this.refs.login.value;
-    let password = this.refs.password.value;
+  state = {
+    errors: {}
+  }
 
-    login(email, password);
+  handleLogin(data) {
+    if(!isEmpty(data.email) && !isEmpty(data.password)) {
+      login(data.email, data.password);
+    } else {
+      this.setState({
+        errors: {
+          general: "Please complete the form"
+        }
+      });
+    }
   }
 
   componentWillMount() {
-    logout();
+    if(this.props.auth.isAuthenticated) {
+      logout();
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -21,17 +37,49 @@ class LoginComponent extends Component {
     }
   }
 
+  getErrorPanel() {
+    if(!isEmpty(this.state.errors.general)) {
+      return (
+        <PersistentMessage type='error'>
+          {this.state.errors.general}
+        </PersistentMessage>
+      );
+    }
+  }
+
   render() {
+    
     return (
       <div className="login">
-        <h3>{this.props.auth.user.name}</h3>
-        <form id="login" onSubmit={ this.handleLogin.bind(this) }>
-          <input type="email" ref="login" name="login" placeholder="Email" />
+        { this.getErrorPanel() }
+        <Formsy.Form
+            onValid={this.enableButton}
+            onInvalid={this.disableButton}
+            onValidSubmit={ this.handleLogin.bind(this) }
+            onInvalidSubmit={this.notifyFormError}
+          >
+          <FormsyText
+              name="email"
+              validations="isEmail"
+              validationError="Not an email my friend"
+              floatingLabelText="Email"
+            />
           <br />
-          <input type="text" ref="password" name="password" placeholder="Password" />
-          <br />
-          <button>Login</button>
-        </form>
+          <FormsyText
+              name="password"
+              type="password"
+              validations="isWords"
+              validationError="hmmm"
+              floatingLabelText="Password"
+            />
+            <br />
+            <br />
+
+            <RaisedButton
+              type="submit"
+              label="Login"
+            />
+        </Formsy.Form>
       </div>
     );
   }

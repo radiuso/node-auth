@@ -1,5 +1,6 @@
 'use strict';
 /*eslint no-process-env:0*/
+import path from 'path';
 
 // Development specific configuration
 // ==================================
@@ -11,6 +12,8 @@ module.exports = {
   },
 
   // Seed database on startup
-  seedDB: true
+  seedDB: true,
+
+  clientRoot: path.join(path.normalize(`${__dirname}/../../..`), 'public'),
 
 };
