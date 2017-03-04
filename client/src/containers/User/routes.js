@@ -7,7 +7,7 @@ import { hasRole } from '../../middleware/auth';
 const routes = (
 	<Route path="/users" component={User} onEnter={hasRole('admin')}>
 		<IndexRoute component={UsersList} />
-  </Route>
+	</Route>
 );
 
 export default routes;

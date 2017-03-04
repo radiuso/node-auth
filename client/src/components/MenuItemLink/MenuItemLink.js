@@ -1,24 +1,40 @@
 import React from 'react';
 import { Link } from 'react-router';
-
-import MenuItem from 'material-ui/MenuItem';
+import classNames from 'classnames';
 
 import './MenuItemLink.scss';
+class MenuItemLink extends React.Component {
+    static propTypes = {
+        children: React.PropTypes.node,
+        to: React.PropTypes.string.isRequired,
+        header: React.PropTypes.bool
+    }
 
-const MenuItemLink = ({to, primaryText}) => {
+    render() {
+        const {
+            to,
+            children,
+            header,
+            ...rest
+        } = this.props;
 
-    return(
-        <MenuItem>
-            <Link to={to} className="menu-item-link">
-                {primaryText}
+        const linkClassNames = classNames(
+            'item',
+            'menu-item-link',
+            { 'header': header }
+        );
+
+        return (
+            <Link 
+                to={to} 
+                className={linkClassNames} 
+                activeClassName="active" 
+                {...rest}
+            >
+                {children}
             </Link>
-        </MenuItem>
-    );
-};
-
-MenuItemLink.propTypes = {
-    to: React.PropTypes.string.isRequired,
-    primaryText: React.PropTypes.string.isRequired
+        );
+    }
 }
 
 export default MenuItemLink;

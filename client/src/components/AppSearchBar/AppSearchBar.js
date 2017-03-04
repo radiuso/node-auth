@@ -1,49 +1,66 @@
 import React, {Component} from 'react';
-
-import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
-import FlatButton from 'material-ui/FlatButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-// import NavigationClose from 'material-ui/svg-icons/navigation/close';
-import NavigationOpen from 'material-ui/svg-icons/navigation/menu';
+import { Menu, Button } from 'semantic-ui-react';
 
 import MenuItemLink from '../MenuItemLink';
 
 import { APP_NAME } from '../../constants';
 
 export default class AppSearchBar extends Component {
-  getLoginMenu() {
-    return (<FlatButton label="Login" />);
+  getLoginLeftMenu() {
+    return (
+      <Menu.Menu>
+      </Menu.Menu>
+    );
   } 
 
-  getLoggedMenu() {
-    return (<IconMenu
-      iconButtonElement={
-        <IconButton><MoreVertIcon /></IconButton>
-      }
-      targetOrigin={{horizontal: 'right', vertical: 'top'}}
-      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-    >
-      <MenuItem primaryText="Refresh" />
-      <MenuItem primaryText="Help" />
-      <MenuItemLink to='/login' primaryText='Sign out' />
-    </IconMenu>);
+  getLoggedLeftMenu() {
+    return (
+      <Menu.Menu>
+        <MenuItemLink to='/users'>
+          Users
+        </MenuItemLink>
+      </Menu.Menu>
+    )
+  }
+
+  getLoginRightMenu() {
+    return (
+      <Menu.Menu position='right'>
+        <MenuItemLink to='/signup'>
+          <Button primary>Sign up</Button>
+        </MenuItemLink>
+
+        <MenuItemLink to='/login'>
+          <Button>Login</Button>
+        </MenuItemLink>
+      </Menu.Menu>
+    );
+  } 
+
+  getLoggedRightMenu() {
+    return (
+      <Menu.Menu position='right'>
+        <MenuItemLink to='/login'>
+          <Button>Logout</Button>
+        </MenuItemLink>
+      </Menu.Menu>
+    )
   }
 
   render() {
     const { isLogged } = this.props;
-    const rightElement = isLogged ? this.getLoggedMenu() : this.getLoginMenu();
+    const leftElements = isLogged ? this.getLoggedLeftMenu() : this.getLoginLeftMenu();
+    const rightElements = isLogged ? this.getLoggedRightMenu() : this.getLoginRightMenu();
 
     return (
-      <div>
-        <AppBar
-          title={APP_NAME}
-          iconElementLeft={ <IconButton><NavigationOpen /></IconButton> }
-          iconElementRight={ rightElement }
-        />
-      </div>
+      <Menu stackable borderless>
+        <MenuItemLink header to='/' onlyActiveOnIndex>
+          {APP_NAME}
+        </MenuItemLink>
+
+        { leftElements }
+        { rightElements }
+      </Menu>
     );
   }
 }
