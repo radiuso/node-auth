@@ -9,25 +9,8 @@ import PersistentMessage from '../../../components/PersistentMessage';
 import { login, logout } from '../../../actions/authActions';
 
 class LoginComponent extends Component {
-  state = {
-    errors: {}
-  }
-
   handleLogin(data) {
-    console.log(data);
-    if(!isEmpty(data.email) && !isEmpty(data.password)) {
-      login(data.email, data.password);
-    } else {
-      
-    }
-  }
-
-  displayError() {
-    this.setState({
-        errors: {
-          general: 'Please complete the form'
-        }
-      });
+    login(data.email, data.password);
   }
 
   componentWillMount() {
@@ -43,10 +26,10 @@ class LoginComponent extends Component {
   }
 
   getErrorPanel() {
-    if(!isEmpty(this.state.errors.general)) {
+    if(!isEmpty(this.props.auth.error)) {
       return (
         <PersistentMessage error>
-          {this.state.errors.general}
+          {this.props.auth.error.message}
         </PersistentMessage>
       );
     }
@@ -62,7 +45,6 @@ class LoginComponent extends Component {
             <Formsy.Form
               noValidate
               onValidSubmit={ this.handleLogin.bind(this) }
-              onInvalidSubmit={ this.displayError.bind(this) }
               >
 
               <Form.Field>

@@ -15,12 +15,17 @@ export default (state = initialState, action) => {
           user
         };
       case LOGIN_ERROR: 
+        const response = action.payload.error.response;
+        const error = {
+          status: response.status,
+          message: response.data.message,
+          originalMessage: response.message
+        };
+        
         return {
           isAuthenticated: false,
           user: {},
-          error: {
-            ...action
-          }
+          error
         };
 
       case LOGOUT:

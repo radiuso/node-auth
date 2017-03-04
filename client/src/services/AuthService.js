@@ -7,8 +7,7 @@ export default {
       return axios.post(`${PUBLIC_URL}/auth/local`, {
           'email': login,
           'password': password
-      })
-      .catch((error) => console.log(error));
+      });
     },
 
     logout() {
