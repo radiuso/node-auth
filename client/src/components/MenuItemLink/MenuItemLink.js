@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 import MenuItem from 'material-ui/MenuItem';
 
-import './MenuItemLink.css';
+import './MenuItemLink.scss';
 
 const MenuItemLink = ({to, primaryText}) => {
 
