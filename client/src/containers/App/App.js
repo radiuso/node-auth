@@ -2,13 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
 
+import { Dimmer, Loader, Segment } from 'semantic-ui-react'
+
 import AppSearchBar from '../../components/AppSearchBar';
 import PersistentMessage from '../../components/PersistentMessage';
-
+import { isLoaded } from '../../actions/appActions';
 
 import './App.scss';
 
 class App extends Component {
+  componentDidMount() {
+    isLoaded();
+  }
+
   getErrorMessagePanel() {
     if(!isEmpty(this.props.messages.error)) {
       return (
@@ -23,13 +29,19 @@ class App extends Component {
   }
 
   render() {
+    const active = this.props.app.isLoading;
     return (
-      <div>
-        <AppSearchBar isLogged={ this.props.auth.isAuthenticated } />
-        <div className="App">
-          { this.getErrorMessagePanel() }
-          { this.props.children }
-        </div>
+      <div className="App">
+        <Dimmer.Dimmable dimmed={active}>
+          <Dimmer active={active} inverted>
+            <Loader>Loading</Loader>
+          </Dimmer>
+            <AppSearchBar isLogged={ this.props.auth.isAuthenticated } />
+            <div>
+              { this.getErrorMessagePanel() }
+              { this.props.children }
+            </div>
+        </Dimmer.Dimmable>
       </div>
     );
   }
@@ -38,6 +50,7 @@ class App extends Component {
 
 const mapStateToProps = function(store) {
   return {
+    app: store.appState,
     auth: store.authState,
     messages: store.messageState
   };

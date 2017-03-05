@@ -8,6 +8,7 @@ import reducers from './reducers';
 import setAuthorizationToken from './utils/setAuthorizationToken';
 import { setCurrentUser } from './actions/authActions';
 import { addErrorMessage, clearMessages } from './actions/messageActions';
+import { isLoading, isLoaded } from './actions/appActions';
 
 // Combine Reducers
 const mergedReducers = {
@@ -36,8 +37,7 @@ store.dispatchAsync = (promise, options, payload) => {
 
   // set loading state
   if(!silent) {
-    // store.dispatch({
-    // })
+    isLoading();
   }
 
   if(!isUndefined(request)) {
@@ -46,13 +46,25 @@ store.dispatchAsync = (promise, options, payload) => {
 
   promise
   .then(
-    response => store.dispatch({
-      type: success,
-      payload: Object.assign({}, payload, { response })
-    })
+    response => {
+      // is Loaded
+      if(!silent) {
+        isLoaded();
+      }
+
+      store.dispatch({
+        type: success,
+        payload: Object.assign({}, payload, { response })
+      });
+    }
   )
   .catch(error => {
     const errorResponse = error.response;
+    
+    // is loaded
+    if(!silent) {
+      isLoaded();
+    }
 
     // dispatch error reducer action if set
     if(!isUndefined(failure)) {
@@ -69,7 +81,7 @@ store.dispatchAsync = (promise, options, payload) => {
         codeText: errorResponse.statusText,
         message: errorResponse.data.message,
       };
-      
+
       addErrorMessage(simpleError);
     }
   });
