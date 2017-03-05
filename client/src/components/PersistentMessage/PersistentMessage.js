@@ -7,19 +7,24 @@ class PersistentMessage extends React.Component {
     static propTypes = {
         children: PropTypes.node,
         error: PropTypes.bool,
-        errorCode: PropTypes.number
+        warning: PropTypes.bool,
+        code: PropTypes.number
     }
 
     getHeader() {
-        const { error, errorCode } = this.props;
+        const { error, warning, code } = this.props;
         let header = '';
+        if(code > 0) {
+            header += code + ' - ';
+        }
 
         if(error) {
-            if(errorCode > 0) {
-                header += errorCode + ' - ';
-            }
             header += 'Outch!!';
-        } else {
+        } 
+        else if(warning) {
+            header += 'Warning';
+        }
+        else {
             header += 'Info';
         }   
 
@@ -29,13 +34,15 @@ class PersistentMessage extends React.Component {
     render() {
         const {
             children,
-            error
+            error,
+            warning
         } = this.props;
         
         return (
             <div className="persistent-message">
                 <Message
                     error={ error }
+                    warning={ warning }
                     header={ this.getHeader() }
                     content={ children }
                 />

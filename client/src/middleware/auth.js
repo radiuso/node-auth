@@ -1,5 +1,6 @@
 import store from '../store';
 import { hasAccessTo } from '../utils/restrictedArea';
+import { addWarningMessage } from '../actions/messageActions';
 
 export const redirectNotPermited = (nextState, replace) => {
   const pathname = nextState.location.pathname;
@@ -12,11 +13,21 @@ export const redirectNotPermited = (nextState, replace) => {
       replace({
         pathname: "/",
       });
+
+      addWarningMessage({
+        code: 401,
+        message: "you d'ont have enouth privilege"
+      });
     } 
     // redirect nonuser
     else {
       replace({
         pathname: "/login",
+      });
+
+      addWarningMessage({
+        code: 401,
+        message: "please connect first"
       });
     }
   }

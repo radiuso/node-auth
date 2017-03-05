@@ -1,12 +1,24 @@
 import store from '../store';
 
-import { ADD_ERROR_MESSAGE, CLEAR_MESSAGES } from './types/messageTypes';
+import { ADD_ERROR_MESSAGE, ADD_WARNING_MESSAGE, CLEAR_MESSAGES } from './types/messageTypes';
 
-export function addErrorMessage(error) {
+
+function addMessage(type, message) {
     store.dispatch({
-        type: ADD_ERROR_MESSAGE,
-        error
+        type,
+        message
     });
+    setTimeout(() => {
+      clearMessages();
+    }, 4000);
+}
+
+export function addErrorMessage(message) {
+    addMessage(ADD_ERROR_MESSAGE, message);
+}
+
+export function addWarningMessage(message) {
+    addMessage(ADD_WARNING_MESSAGE, message);
 }
 
 export function clearMessages() {

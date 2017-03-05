@@ -1,5 +1,7 @@
 import { createStore, combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+
 import jwtDecode from 'jwt-decode';
 import { isUndefined } from 'lodash';
 
@@ -19,7 +21,7 @@ const mergedReducers = {
 // TODO remove devtool in prod
 const store = createStore(
   combineReducers(mergedReducers),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  composeWithDevTools()
 );
 
 // set auth

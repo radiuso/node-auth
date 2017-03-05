@@ -19,10 +19,20 @@ class App extends Component {
     if(!isEmpty(this.props.messages.error)) {
       return (
         <PersistentMessage 
-          errorCode={this.props.messages.error.code}
+          code={this.props.messages.error.code}
           error
         >
           {this.props.messages.error.message}
+        </PersistentMessage>
+      );
+    }
+    else if(!isEmpty(this.props.messages.warning)) {
+      return (
+        <PersistentMessage 
+          code={this.props.messages.warning.code}
+          warning
+        >
+          {this.props.messages.warning.message}
         </PersistentMessage>
       );
     }
