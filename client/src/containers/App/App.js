@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
 
-import { Dimmer, Loader, Segment } from 'semantic-ui-react'
+import { Dimmer, Loader } from 'semantic-ui-react'
 
 import AppSearchBar from '../../components/AppSearchBar';
 import PersistentMessage from '../../components/PersistentMessage';

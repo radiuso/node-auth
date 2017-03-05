@@ -6,23 +6,6 @@ import MenuItemLink from '../MenuItemLink';
 import { APP_NAME } from '../../constants';
 
 export default class AppSearchBar extends Component {
-  getLoginLeftMenu() {
-    return (
-      <Menu.Menu>
-      </Menu.Menu>
-    );
-  } 
-
-  getLoggedLeftMenu() {
-    return (
-      <Menu.Menu>
-        <MenuItemLink to='/users'>
-          Users
-        </MenuItemLink>
-      </Menu.Menu>
-    )
-  }
-
   getLoginRightMenu() {
     return (
       <Menu.Menu position='right'>
@@ -49,7 +32,6 @@ export default class AppSearchBar extends Component {
 
   render() {
     const { isLogged } = this.props;
-    const leftElements = isLogged ? this.getLoggedLeftMenu() : this.getLoginLeftMenu();
     const rightElements = isLogged ? this.getLoggedRightMenu() : this.getLoginRightMenu();
 
     return (
@@ -57,8 +39,11 @@ export default class AppSearchBar extends Component {
         <MenuItemLink header to='/' onlyActiveOnIndex>
           {APP_NAME}
         </MenuItemLink>
+        
+        <MenuItemLink to='/users'>
+          Users
+        </MenuItemLink>
 
-        { leftElements }
         { rightElements }
       </Menu>
     );

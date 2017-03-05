@@ -1,22 +1,22 @@
 import store from '../store';
+import { hasAccessTo } from '../utils/restrictedArea';
 
-export const redirectNonUser = (nextState, replace) => {
-  const auth = store.getState().authState;
+export const redirectNotPermited = (nextState, replace) => {
+  const pathname = nextState.location.pathname;
 
-  if (!auth.isAuthenticated) {
-    replace({
-      pathname: "/login",
-    });
-  }
-};
-
-export function hasRole(roleRequired) {
-  return (nextState, replace) => {
+  if(!hasAccessTo(pathname)) {
     const auth = store.getState().authState;
-
-    if (!auth.isAuthenticated || auth.user.role !== roleRequired) {
+    
+    // redirect user with no required privilege
+    if(auth.isAuthenticated) {
       replace({
         pathname: "/",
+      });
+    } 
+    // redirect nonuser
+    else {
+      replace({
+        pathname: "/login",
       });
     }
   }
