@@ -4,7 +4,7 @@ import store from '../store';
 import AuthService from '../services/AuthService';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 
-import { LOGIN, LOGIN_SUCCESS, LOGIN_ERROR, SET_CURRENT_USER, LOGOUT } from './types/authTypes';
+import { LOGIN, LOGIN_SUCCESS, SET_CURRENT_USER, LOGOUT } from './types/authTypes';
 
 export function setCurrentUser(user) {
   return {
@@ -30,7 +30,8 @@ export function login(login, password) {
   {
     request: LOGIN,
     success: LOGIN_SUCCESS,
-    failure: LOGIN_ERROR
+    dispatchErrorMessage: true,
+    silent: false
   });
 };
 

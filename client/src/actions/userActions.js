@@ -10,5 +10,3 @@ export function fetchUsers() {
     failure: FETCH_USERS_ERROR
   });
 }
-
-

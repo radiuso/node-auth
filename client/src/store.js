@@ -1,11 +1,13 @@
 import { createStore, combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import jwtDecode from 'jwt-decode';
+import { isUndefined } from 'lodash';
 
 import reducers from './reducers';
 
 import setAuthorizationToken from './utils/setAuthorizationToken';
 import { setCurrentUser } from './actions/authActions';
+import { addErrorMessage, clearMessages } from './actions/messageActions';
 
 // Combine Reducers
 const mergedReducers = {
@@ -25,19 +27,52 @@ if(localStorage.jwtToken) {
 }
 
 
-store.dispatchAsync = (promise, types, payload) => {
-  const { request, success, failure } = types;
-  store.dispatch({ type: request, payload: Object.assign({}, payload) });
-  promise.then(
+
+store.dispatchAsync = (promise, options, payload) => {
+  const { request, success, failure, silent, dispatchErrorMessage } = options;
+
+  // remove previous messages
+  clearMessages();
+
+  // set loading state
+  if(!silent) {
+    // store.dispatch({
+    // })
+  }
+
+  if(!isUndefined(request)) {
+    store.dispatch({ type: request, payload: Object.assign({}, payload) });
+  }
+
+  promise
+  .then(
     response => store.dispatch({
       type: success,
       payload: Object.assign({}, payload, { response })
-    }),
-    error => store.dispatch({
-      type: failure,
-      payload: Object.assign({}, payload, { error })
     })
-  );
+  )
+  .catch(error => {
+    const errorResponse = error.response;
+
+    // dispatch error reducer action if set
+    if(!isUndefined(failure)) {
+      store.dispatch({
+        type: failure,
+        payload: Object.assign({}, payload, { error })
+      });
+    }
+
+    // add error message
+    if(dispatchErrorMessage) {
+      const simpleError = {
+        code: errorResponse.status,
+        codeText: errorResponse.statusText,
+        message: errorResponse.data.message,
+      };
+      
+      addErrorMessage(simpleError);
+    }
+  });
 };
 
 export default store;

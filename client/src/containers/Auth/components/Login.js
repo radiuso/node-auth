@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Formsy from 'formsy-react';
-import { isEmpty } from 'lodash';
 import { Button, Grid, Form , Label } from 'semantic-ui-react';
 import { Input } from 'formsy-semantic-ui-react';
 
-import PersistentMessage from '../../../components/PersistentMessage';
 import { login, logout } from '../../../actions/authActions';
 
 class LoginComponent extends Component {
@@ -25,16 +23,6 @@ class LoginComponent extends Component {
     }
   }
 
-  getErrorPanel() {
-    if(!isEmpty(this.props.auth.error)) {
-      return (
-        <PersistentMessage error>
-          {this.props.auth.error.message}
-        </PersistentMessage>
-      );
-    }
-  }
-
   render() {
     let errorLabel = <Label basic color='red' pointing/>;
 
@@ -46,7 +34,6 @@ class LoginComponent extends Component {
               noValidate
               onValidSubmit={ this.handleLogin.bind(this) }
               >
-
               <Form.Field>
                 <label>Enter Email</label>
                 <Input
@@ -78,9 +65,6 @@ class LoginComponent extends Component {
               </Form.Field>
               <br />
 
-              { this.getErrorPanel() }
-              <br />
-              
               <Button basic color='green' type='submit'>Login</Button>
             </Formsy.Form>
           </Grid.Column>
