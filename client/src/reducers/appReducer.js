@@ -1,9 +1,10 @@
 import update from 'react-addons-update';
 
-import { IS_LOADING, IS_LOADED } from '../actions/types/appTypes';
+import { IS_LOADING, IS_LOADED, DISPLAY_SEARCH, HIDE_SEARCH } from '../actions/types/appTypes';
 
 let initialState = {
-  isLoading: true
+  isLoading: true,
+  isSearchable: false
 };
 
 export default (state = initialState, action) => {
@@ -12,12 +13,19 @@ export default (state = initialState, action) => {
         return update(state, {
           isLoading: { $set: true }
         });
-        
       case IS_LOADED:
         return update(state, {
           isLoading: { $set: false }
         });
 
+      case DISPLAY_SEARCH:
+        return update(state, {
+          isSearchable: { $set: true }
+        });
+      case HIDE_SEARCH:
+        return update(state, {
+          isSearchable: { $set: false }
+        });
       default:
         return state;
     }

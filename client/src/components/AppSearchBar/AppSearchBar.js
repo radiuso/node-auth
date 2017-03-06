@@ -1,38 +1,48 @@
-import React, {Component} from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Menu, Button } from 'semantic-ui-react';
-
-import MenuItemLink from '../MenuItemLink';
-
 import { APP_NAME } from '../../constants';
 
-export default class AppSearchBar extends Component {
-  getLoginRightMenu() {
-    return (
-      <Menu.Menu position='right'>
-        <MenuItemLink to='/signup'>
-          <Button primary>Sign up</Button>
-        </MenuItemLink>
+import MenuItemLink from '../MenuItemLink';
+import AppSearch from '../AppSearch';
 
-        <MenuItemLink to='/login'>
-          <Button>Login</Button>
-        </MenuItemLink>
-      </Menu.Menu>
-    );
-  } 
-
-  getLoggedRightMenu() {
-    return (
-      <Menu.Menu position='right'>
-        <MenuItemLink to='/login'>
-          <Button>Logout</Button>
-        </MenuItemLink>
-      </Menu.Menu>
-    )
+class AppSearchBar extends Component {
+  static propTypes = {
+    isLogged: PropTypes.bool.isRequired,
+    displaySearch: PropTypes.bool.isRequired,
   }
 
-  render() {
+  getRightElements() {
     const { isLogged } = this.props;
-    const rightElements = isLogged ? this.getLoggedRightMenu() : this.getLoginRightMenu();
+    if(isLogged) {
+      return (
+        <Menu.Menu position='right'>
+          <Menu.Item>
+            <AppSearch />
+          </Menu.Item>
+
+          <MenuItemLink to='/login'>
+            <Button>Logout</Button>
+          </MenuItemLink>
+        </Menu.Menu>
+      );
+    }
+    else {
+      return (
+        <Menu.Menu position='right'>
+          <MenuItemLink to='/signup'>
+            <Button primary>Sign up</Button>
+          </MenuItemLink>
+
+          <MenuItemLink to='/login'>
+            <Button>Login</Button>
+          </MenuItemLink>
+        </Menu.Menu>
+      );
+    }
+  }
+  
+  render() {
+    const rightElements = this.getRightElements();
 
     return (
       <Menu stackable borderless>
@@ -49,3 +59,5 @@ export default class AppSearchBar extends Component {
     );
   }
 }
+
+export default AppSearchBar;

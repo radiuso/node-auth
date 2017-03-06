@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import { Table, Label, Menu, Icon } from 'semantic-ui-react';
-
+import { Table } from 'semantic-ui-react';
 import { fetchUsers } from '../../../actions/userActions';
-
+import { setPageState } from '../../../actions/appActions';
 
 class UserList extends Component {
   componentDidMount() {
     // fetch users
     fetchUsers();
-  }
 
+    setPageState({
+      isSearchable: true
+    });
+  }
   render() {
     let users = this.props.users.map((user, index) => (
       <Table.Row key={ user._id }>
@@ -43,7 +44,8 @@ class UserList extends Component {
 
 const mapStateToProps = function(store) {
   return {
-    users: store.userState
+    users: store.userState,
+    app: store.appState
   };
 };
 

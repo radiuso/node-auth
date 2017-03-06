@@ -5,6 +5,9 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import jwtDecode from 'jwt-decode';
 import { isUndefined } from 'lodash';
 
+
+import { reducer as notifications } from 'react-notification-system-redux';
+
 import reducers from './reducers';
 
 import setAuthorizationToken from './utils/setAuthorizationToken';
@@ -15,6 +18,7 @@ import { isLoading, isLoaded } from './actions/appActions';
 // Combine Reducers
 const mergedReducers = {
   ...reducers,
+  notifications,
   routing: routerReducer
 };
 
