@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash';
 import { Dimmer, Loader } from 'semantic-ui-react'
 
 import AppSearchBar from '../../components/AppSearchBar';
-import PersistentMessage from '../../components/PersistentMessage';
+import Message from '../../components/Message';
 import { isLoaded } from '../../actions/appActions';
 
 import './App.scss';
@@ -18,22 +18,22 @@ class App extends Component {
   getErrorMessagePanel() {
     if(!isEmpty(this.props.messages.error)) {
       return (
-        <PersistentMessage 
+        <Message 
           code={this.props.messages.error.code}
           error
         >
           {this.props.messages.error.message}
-        </PersistentMessage>
+        </Message>
       );
     }
     else if(!isEmpty(this.props.messages.warning)) {
       return (
-        <PersistentMessage 
+        <Message 
           code={this.props.messages.warning.code}
           warning
         >
           {this.props.messages.warning.message}
-        </PersistentMessage>
+        </Message>
       );
     }
   }

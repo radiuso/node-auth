@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import { Message } from 'semantic-ui-react';
 
-import './PersistentMessage.scss';
+import './Message.scss';
 
-class PersistentMessage extends React.Component {
+class MessageComponent extends React.Component {
     static propTypes = {
         children: PropTypes.node,
         error: PropTypes.bool,
@@ -39,7 +39,7 @@ class PersistentMessage extends React.Component {
         } = this.props;
         
         return (
-            <div className="persistent-message">
+            <div className="message-container">
                 <Message
                     error={ error }
                     warning={ warning }
@@ -51,4 +51,4 @@ class PersistentMessage extends React.Component {
     }
 }
 
-export default PersistentMessage;
+export default MessageComponent;
