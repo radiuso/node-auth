@@ -6125,6 +6125,18 @@ react-dom@^15.4.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
+react-notification-system-redux@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/react-notification-system-redux/-/react-notification-system-redux-1.0.11.tgz#f59ca6c817b95a18687ced02eb6e1c4e721b807e"
+  dependencies:
+    react-notification-system "^0.2.7"
+
+react-notification-system@^0.2.12, react-notification-system@^0.2.7:
+  version "0.2.12"
+  resolved "https://registry.yarnpkg.com/react-notification-system/-/react-notification-system-0.2.12.tgz#8cadae3b09ed979e3be0150ac9b423879a7d8a24"
+  dependencies:
+    object-assign "^4.0.1"
+
 react-redux@^5.0.3:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.3.tgz#86c3b68d56e74294a42e2a740ab66117ef6c019f"
@@ -6282,6 +6294,10 @@ reduce-function-call@^1.0.1:
   resolved "https://registry.yarnpkg.com/reduce-function-call/-/reduce-function-call-1.0.2.tgz#5a200bf92e0e37751752fe45b0ab330fd4b6be99"
   dependencies:
     balanced-match "^0.4.2"
+
+redux-devtools-extension@^2.13.0:
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.0.tgz#c8300d72630c00999302526204d47c360cc0637f"
 
 redux@^3.6.0:
   version "3.6.0"
@@ -6564,7 +6580,7 @@ semantic-ui-css@^2.2.9:
   dependencies:
     jquery x.*
 
-semantic-ui-react@^0.67.0:
+semantic-ui-react@0.67.0:
   version "0.67.0"
   resolved "https://registry.yarnpkg.com/semantic-ui-react/-/semantic-ui-react-0.67.0.tgz#6a39b34b566bc0cb9ec2d7c0430b12d9a7e11dd4"
   dependencies:

@@ -1,25 +1,48 @@
 import React from 'react';
-import { Input } from 'semantic-ui-react';
+import { Input, Icon } from 'semantic-ui-react';
+import { browserHistory } from 'react-router'
 
 class AppSearch extends React.Component {
-    handleSearch(e) {
-        const value = e.target.value;
-        console.log(value);
+    state = {
+        searchValue: ""
+    };
+
+    handleChange(e) {
+        this.setState({
+            searchValue: e.target.value
+        });
+    }
+
+    handleKeyPress(target) {
+        if (target.charCode === 13) {
+            this.search();
+        }
+        
+    }
+
+    handleClick() {
+        this.search();
+    }
+
+    search() {
+        if(this.state.searchValue !== '') {
+            browserHistory.push('/search/'+this.state.searchValue);
+        }
     }
 
     render() {
         return (
-            <Input action={{ icon: 'search' }} placeholder='Search...' />
+            <Input 
+                placeholder='Search...'
+                ref={ (input) => this.appSearchInput = input }
+                action={{ icon: 'search' }} 
+                value={ this.state.searchValue }
+                onChange={ this.handleChange.bind(this) }
+                onKeyPress={ this.handleKeyPress.bind(this) } 
+                icon={<Icon name='search' onClick={ this.handleClick.bind(this) } />}
+            />
         );
     }
 }
 
 export default AppSearch;
-// const mapStateToProps = function(store) {
-//   return {
-//     auth: store.authState
-//   };
-// };
-
-
-// export default connect(mapStateToProps)(AppSearch);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import SearchPage from './components/SearchPage';
+import SearchPage from './SearchPage';
 
 const routes = (
 	<Route path="/search/:value">
