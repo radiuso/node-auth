@@ -1,4 +1,4 @@
-import jwtDecode from 'jwt-decode';
+import JWT from 'jwt-client';
 
 import store from '../store';
 import AuthService from '../services/AuthService';
@@ -19,11 +19,12 @@ export function login(login, password) {
     .then((res) => {
       const token = res.data.token;
 
-      localStorage.setItem('jwtToken', token);
+      JWT.keep(token);
       setAuthorizationToken(token);
 
       // dispatch action to set user
-      store.dispatch(setCurrentUser(jwtDecode(token)));
+      const readableToken = JWT.read(token);
+      store.dispatch(setCurrentUser(readableToken.claim));
 
       return token;
     }), 

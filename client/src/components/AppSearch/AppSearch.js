@@ -2,6 +2,9 @@ import React from 'react';
 import { Input, Icon } from 'semantic-ui-react';
 import { browserHistory } from 'react-router'
 
+/**
+ * TODO set searchValue to store
+ */
 class AppSearch extends React.Component {
     state = {
         searchValue: ""
@@ -17,7 +20,6 @@ class AppSearch extends React.Component {
         if (target.charCode === 13) {
             this.search();
         }
-        
     }
 
     handleClick() {

@@ -15,7 +15,7 @@ export function hasAccessTo(to) {
         const auth = store.getState().authState;
         const requiredRole = restrictedAreas[areaIndex].role;
         let hasRequiredRole = true;
-
+        
         if(!isEmpty(requiredRole)) {
             if(isArray(requiredRole)) {
                 hasRequiredRole = findIndex(requiredRole, auth.user.role) > -1;
@@ -23,7 +23,6 @@ export function hasAccessTo(to) {
                 hasRequiredRole = auth.user.role === requiredRole;
             }
         }
-
         return auth.isAuthenticated && hasRequiredRole;
     } 
 

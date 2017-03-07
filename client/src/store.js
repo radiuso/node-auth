@@ -1,8 +1,9 @@
 import { createStore, combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { browserHistory } from 'react-router'
 
-import jwtDecode from 'jwt-decode';
+import JWT from 'jwt-client';
 import { isUndefined } from 'lodash';
 
 
@@ -29,11 +30,17 @@ const store = createStore(
 );
 
 // set auth
-if(localStorage.jwtToken) {
-  setAuthorizationToken(localStorage.jwtToken);
-  store.dispatch(setCurrentUser(jwtDecode(localStorage.jwtToken)));
+const token = JWT.get();
+if(token) {
+  if(JWT.validate(token)) {
+    const readableToken = JWT.read(token);
+    setAuthorizationToken(token);
+    store.dispatch(setCurrentUser(readableToken.claim));
+  } else {
+    JWT.forget();
+    browserHistory.push('/login');
+  }
 }
-
 
 
 store.dispatchAsync = (promise, options, payload) => {
@@ -66,6 +73,7 @@ store.dispatchAsync = (promise, options, payload) => {
     }
   )
   .catch(error => {
+    console.log(error);
     const errorResponse = error.response;
     
     // is loaded
